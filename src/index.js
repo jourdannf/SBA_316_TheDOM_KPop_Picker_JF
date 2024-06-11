@@ -10,6 +10,7 @@ const finalIdols = [];
 
 const yourPicks = document.querySelector("form").appendChild(document.createElement("div"));
 yourPicks.id = "yourPicks";
+yourPicks.style.width = "900px";
 yourPicks.classList.add("row", "mx-auto");
 
 function createIdolTemplate (name, link){
@@ -33,13 +34,9 @@ function createIdolTemplate (name, link){
 
 function createPicksTemplate (link){
     const frag = document.createDocumentFragment();
-    const outerDiv = document.createElement("div");
-    // outerDiv.style.width = "600px";
-    outerDiv.style.height = "300px"
     const pic = document.createElement("img");
     pic.setAttribute("src", link);
-    pic.classList.add("col-2", "object-fit-cover", "rounded", "addedPick");
-    outerDiv.appendChild(pic);
+    pic.classList.add("col-2", "object-fit-cover", "rounded", "addedPick", "mx-auto");
 
     frag.appendChild(pic);
     
