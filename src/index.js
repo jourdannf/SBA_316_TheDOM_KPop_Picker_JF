@@ -7,7 +7,7 @@ const idols = [
 ];
 const finalIdols = [];
 
-const yourPicks = document.querySelector("div").appendChild(document.createElement("div"));
+const yourPicks = document.querySelector("form").appendChild(document.createElement("div"));
 yourPicks.id = "yourPicks";
 yourPicks.classList.add("row", "mx-auto");
 
@@ -94,6 +94,27 @@ function handleContestantClick(e){
     }
 
     //You confirm that final list with window.confirm when they hit submit.
+}
+
+//SUBMISSION VALIDATION
+
+const form = document.getElementById("form-container");
+form.addEventListener("submit", checkSelection);
+const ggName = form.elements["groupName"];
+
+function checkSelection(e){ //This is the form validation based on DOM event
+    const regex = /^(?!.*\W).*/;
+
+    console.log(regex.test(ggName));
+    if (!regex.test(ggName.value)){
+        e.preventDefault();
+        window.alert("Your name cannot have any special characters");
+        return false;
+    }
+
+    // window.confirm("Are you sure you're okay with these" +"as your picks for " + "?");
+
+    //Display success message
 }
 
 //For each contestant you're gonna check if they have a dark border and if they do, they'll be added to the list
