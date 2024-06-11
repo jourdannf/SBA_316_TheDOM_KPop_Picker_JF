@@ -1,9 +1,10 @@
 const idols = [
     {name:"Choi Aim", link:"./images/choi_aim.jpg"}, 
-    {name:"Hwang Seyoung", link: ""},
-    {name:"Son Yeongseo", link:""},
-    {name:"Jung Yuri", link: ""},
-    {name: "Reta", link: ""}
+    {name:"Hwang Seyoung", link: "./images/hwangseyoung.jpeg"},
+    {name:"Son Yeongseo", link:"./images/choi_aim.jpg"},
+    {name:"Jung Yuri", link: "./images/choi_aim.jpg"},
+    {name: "Reta", link: "./images/choi_aim.jpg"},
+    {name: "Kang Yunjeong", link: "./images/choi_aim.jpg"}
 ];
 const finalIdols = [];
 
@@ -67,10 +68,6 @@ function handleContestantClick(e){
         return;
     }
 
-    //Ask what kind of position (Main/Lead Dancer/Vocalist/Rapper) they want the person to have
-    //Add border to card
-    e.target.parentNode.classList.toggle("border-dark"); //This should count for changing the class and attribute since classes are technically attributes
-
     //Get the name of the contestant
     if (e.target.classList.contains("card-body")){
         idolName = e.target.textContent;
@@ -80,6 +77,7 @@ function handleContestantClick(e){
     
     //Add or remove from the final list collection
     if (finalIdols.includes(idolName)){
+        e.target.parentNode.classList.remove("border-dark");
         finalIdols.splice(finalIdols.indexOf(idolName), 1);
         yourPicks.childNodes.forEach((pick)=>{
             if (e.target.src === pick.src){
@@ -87,6 +85,13 @@ function handleContestantClick(e){
             }
         });
     }else {
+        if (finalIdols.length === 5){
+            return;
+        }
+
+        //Add border to card
+        e.target.parentNode.classList.add("border-dark"); //This should count for changing the class and attribute since classes are technically attributes
+
         finalIdols.push(idolName);
         console.log(e.target);
         yourPicks.appendChild(createPicksTemplate(e.target.src));
@@ -115,23 +120,14 @@ function checkSelection(e){ //This is the form validation based on DOM event
     if (finalIdols.length < 5){
         e.preventDefault();
         window.alert("You need to pick exactly five people in order to create a complete group.");
+        return;
     }
 
-    window.confirm("Are you sure you're okay with " + finalIdols[0] + ", " + finalIdols[1] + ", " + finalIdols[2] + ", " +finalIdols[3] + ", and " + finalIdols[4] + " as your picks for " + ggName.value + "?");
+    const ready = window.confirm("Are you sure you're okay with " + finalIdols[0] + ", " + finalIdols[1] + ", " + finalIdols[2] + ", " +finalIdols[3] + ", and " + finalIdols[4] + " as your picks for " + ggName.value + "?");
 
-    //Display success message
+    if (!ready){
+        e.preventDefault();
+    }else {
+        //Display sucess message
+    }
 }
-
-//For each contestant you're gonna check if they have a dark border and if they do, they'll be added to the list
-
-
-// const yourPicks = document.querySelector("div").appendChild(document.createElement("div"));
-// yourPicks.id = "yourPicks";
-// yourPicks.classList.add("row", "mx-auto");
-
-// contestants.forEach((contestant)=>{
-//     if(contestant.classList.contains("yourPick")){
-//         //you're gonna add them to a your picks div
-//         yourPicks.appendChild(createPicks(contestant.firstChild.src));
-//     }
-// });
