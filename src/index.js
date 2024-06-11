@@ -108,11 +108,16 @@ function checkSelection(e){ //This is the form validation based on DOM event
     console.log(regex.test(ggName));
     if (!regex.test(ggName.value)){
         e.preventDefault();
-        window.alert("Your name cannot have any special characters");
+        window.alert("Your name cannot have any special characters.");
         return false;
     }
 
-    // window.confirm("Are you sure you're okay with these" +"as your picks for " + "?");
+    if (finalIdols.length < 5){
+        e.preventDefault();
+        window.alert("You need to pick exactly five people in order to create a complete group.");
+    }
+
+    window.confirm("Are you sure you're okay with " + finalIdols[0] + ", " + finalIdols[1] + ", " + finalIdols[2] + ", " +finalIdols[3] + ", and " + finalIdols[4] + " as your picks for " + ggName.value + "?");
 
     //Display success message
 }
