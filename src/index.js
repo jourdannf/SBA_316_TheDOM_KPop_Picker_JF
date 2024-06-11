@@ -7,6 +7,10 @@ const idols = [
 ];
 const finalIdols = [];
 
+const yourPicks = document.querySelector("div").appendChild(document.createElement("div"));
+yourPicks.id = "yourPicks";
+yourPicks.classList.add("row", "mx-auto");
+
 function createIdolTemplate (name, link){
     //Create Document Fragment
     const frag = document.createDocumentFragment();
@@ -24,6 +28,21 @@ function createIdolTemplate (name, link){
 
     return frag;
 
+}
+
+function createPicksTemplate (link){
+    const frag = document.createDocumentFragment();
+    const outerDiv = document.createElement("div");
+    // outerDiv.style.width = "600px";
+    outerDiv.style.height = "300px"
+    const pic = document.createElement("img");
+    pic.setAttribute("src", link);
+    pic.classList.add("col-2", "object-fit-cover", "rounded", "addedPick");
+    outerDiv.appendChild(pic);
+
+    frag.appendChild(pic);
+    
+    return frag;
 }
 
 const rows = document.getElementById("contestantsBox").appendChild(document.createElement("div"));
@@ -62,10 +81,31 @@ function handleContestantClick(e){
     //Add or remove from the final list collection
     if (finalIdols.includes(idolName)){
         finalIdols.splice(finalIdols.indexOf(idolName), 1);
+        yourPicks.childNodes.forEach((pick)=>{
+            if (e.target.src === pick.src){
+                yourPicks.removeChild(pick);
+            }
+        });
     }else {
         finalIdols.push(idolName);
+        console.log(e.target);
+        yourPicks.appendChild(createPicksTemplate(e.target.src));
+        e.target.classList.add("addedPick");
     }
+
     //You confirm that final list with window.confirm when they hit submit.
 }
 
 //For each contestant you're gonna check if they have a dark border and if they do, they'll be added to the list
+
+
+// const yourPicks = document.querySelector("div").appendChild(document.createElement("div"));
+// yourPicks.id = "yourPicks";
+// yourPicks.classList.add("row", "mx-auto");
+
+// contestants.forEach((contestant)=>{
+//     if(contestant.classList.contains("yourPick")){
+//         //you're gonna add them to a your picks div
+//         yourPicks.appendChild(createPicks(contestant.firstChild.src));
+//     }
+// });
