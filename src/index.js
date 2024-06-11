@@ -5,6 +5,7 @@ const idols = [
     {name:"Jung Yuri", link: ""},
     {name: "Reta", link: ""}
 ];
+const finalIdols = [];
 
 function createIdolTemplate (name, link){
     //Create Document Fragment
@@ -33,3 +34,38 @@ idols.forEach((idol) => {
     rows.appendChild(idolDiv);
     
 });
+
+//Add event listener; when you click on card, it's highlighted
+
+const contestants = document.getElementById("contestantsBox").firstChild.childNodes;
+document.getElementById("contestantsBox").addEventListener("click", handleContestantClick);
+
+function handleContestantClick(e){
+    let idolName = "";
+
+    //If the element clicked isn't a card then return immediately
+    if (!(e.target.classList.contains("card-body") || e.target.classList.contains("card-img-top"))){
+        return;
+    }
+
+    //Ask what kind of position (Main/Lead Dancer/Vocalist/Rapper) they want the person to have
+    //Add border to card
+    e.target.parentNode.classList.toggle("border-dark"); //This should count for changing the class and attribute since classes are technically attributes
+
+    //Get the name of the contestant
+    if (e.target.classList.contains("card-body")){
+        idolName = e.target.textContent;
+    }else {
+        idolName = e.target.nextSibling.textContent;
+    }
+    
+    //Add or remove from the final list collection
+    if (finalIdols.includes(idolName)){
+        finalIdols.splice(finalIdols.indexOf(idolName), 1);
+    }else {
+        finalIdols.push(idolName);
+    }
+    //You confirm that final list with window.confirm when they hit submit.
+}
+
+//For each contestant you're gonna check if they have a dark border and if they do, they'll be added to the list
