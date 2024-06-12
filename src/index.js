@@ -7,11 +7,13 @@ const idols = [
     {name: "Kang Yunjeong", link: "./images/choi_aim.jpg"}
 ];
 const finalIdols = [];
+console.log(document.querySelector("form").lastElementChild)
 
-const yourPicks = document.querySelector("form").appendChild(document.createElement("div"));
+const yourPicks = document.querySelector("form").insertBefore(document.createElement("div"), document.querySelector("form").lastElementChild);
+// const yourPicks = document.querySelector("form").appendChild(document.createElement("div"));
 yourPicks.id = "yourPicks";
 yourPicks.style.width = "900px";
-yourPicks.classList.add("row", "mx-auto");
+yourPicks.classList.add("row", "mx-auto", "d-flex", "justify-content-center");
 
 function createIdolTemplate (name, link){
     //Create Document Fragment
@@ -25,7 +27,7 @@ function createIdolTemplate (name, link){
     profilePic.setAttribute("src", link);
     profilePic.classList.add("card-img-top");
     const title = card.appendChild(document.createElement("div"));
-    title.classList.add("card-body");
+    title.classList.add("card-body", "text-center");
     title.textContent = name;
 
     return frag;
@@ -36,7 +38,7 @@ function createPicksTemplate (link){
     const frag = document.createDocumentFragment();
     const pic = document.createElement("img");
     pic.setAttribute("src", link);
-    pic.classList.add("col-2", "object-fit-cover", "rounded", "addedPick", "mx-auto");
+    pic.classList.add("col-2", "object-fit-cover", "rounded", "addedPick");
 
     frag.appendChild(pic);
     
@@ -51,6 +53,8 @@ idols.forEach((idol) => {
     rows.appendChild(idolDiv);
     
 });
+
+document.getElementById("contestantsBox").classList.add("mb-3");
 
 //Add event listener; when you click on card, it's highlighted
 
@@ -76,18 +80,20 @@ function handleContestantClick(e){
     if (finalIdols.includes(idolName)){
         e.target.parentNode.classList.remove("border-dark");
         finalIdols.splice(finalIdols.indexOf(idolName), 1);
-        yourPicks.childNodes.forEach((pick)=>{
+        yourPicks.childNodes.forEach((pick)=>{ //Iterate over collection of elements
             if (e.target.src === pick.src){
                 yourPicks.removeChild(pick);
             }
         });
+        e.target.parentNode.style.backgroundColor = "rgb(255,255,255)";
     }else {
         if (finalIdols.length === 5){
             return;
         }
 
         //Add border to card
-        e.target.parentNode.classList.add("border-dark"); //This should count for changing the class and attribute since classes are technically attributes
+        e.target.parentNode.classList.add("border-dark");
+        e.target.parentNode.style.backgroundColor = "rgb(238, 238, 238)";
 
         finalIdols.push(idolName);
         console.log(e.target);
